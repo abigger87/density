@@ -21,17 +21,20 @@ const main = async() => {
 
   let account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString())
-	
-  // Call add_gif!
-  await program.rpc.addGif({
+
+  // You'll need to now pass a GIF link to the function!
+  await program.rpc.addGif("insert_a_giphy_link_here", {
     accounts: {
       baseAccount: baseAccount.publicKey,
     },
   });
   
-  // Get the account again to see what changed.
+  // Call the account.
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log('👀 GIF Count', account.totalGifs.toString())
+
+  // Access gif_list on the account!
+  console.log('👀 GIF List', account.gifList)
 }
 
 const runMain = async () => {
