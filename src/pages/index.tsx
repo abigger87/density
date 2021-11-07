@@ -10,6 +10,10 @@ import {
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 import styled from '@emotion/styled';
 
+import { Connection, PublicKey, clusterApiUrl} from '@solana/web3.js';
+import {
+  Program, Provider, web3
+} from '@project-serum/anchor';
 import {
   Hero,
   Container,
@@ -19,13 +23,19 @@ import {
   Footer,
   TwitterLogo
 } from '../components';
+import getProvider from '../contexts/GetProvider';
 
-const TEST_GIFS = [
-	'https://i.giphy.com/media/eIG0HfouRQJQr1wBzz/giphy.webp',
-	'https://media3.giphy.com/media/L71a8LW2UrKwPaWNYM/giphy.gif?cid=ecf05e47rr9qizx2msjucl1xyvuu47d7kf25tqt2lvo024uo&rid=giphy.gif&ct=g',
-	'https://media4.giphy.com/media/AeFmQjHMtEySooOc8K/giphy.gif?cid=ecf05e47qdzhdma2y3ugn32lkgi972z9mpfzocjj6z1ro4ec&rid=giphy.gif&ct=g',
-	'https://i.giphy.com/media/PAqjdPkJLDsmBRSYUp/giphy.webp'
-]
+import idl from '../../idl.json';
+import { createGifAccount, getGifList } from '../contexts';
+
+// SystemProgram is a reference to the Solana runtime!
+const { SystemProgram, Keypair } = web3;
+
+// Create a keypair for the account that will hold the GIF data.
+let baseAccount = Keypair.generate();
+
+// Get our program's id form the IDL file.
+const programID = new PublicKey(idl.metadata.address);
 
 // Change this up to be your Twitter if you want.
 const TWITTER_HANDLE = 'andreasbigger';
@@ -96,26 +106,40 @@ const Index = () => {
     </ConnectWalletButton>
   );
 
-  const renderConnectedContainer = () => (
-    <ConnectedContainer>
-      <ConnectedContainerRow>
-        <ConnectedContainerInput
-          type="text"
-          placeholder="Enter gif link!"
-          value={inputValue}
-          onChange={onInputChange}
-        />
-        <ConnectedContainerButton onClick={sendGif}>Submit</ConnectedContainerButton>
-      </ConnectedContainerRow>
-      <GifGrid>
-        {gifList.map(gif => (
-          <GifItem key={gif}>
-            <GifItemImage src={gif} alt={gif} />
-          </GifItem>
-        ))}
-      </GifGrid>
-    </ConnectedContainer>
-  );
+  const renderConnectedContainer = () => {
+    // If we hit this, it means the program account hasn't be initialized.
+    if (gifList === null) {
+      return (
+        <ConnectedContainer>
+          <ConnectedContainerButton onClick={createGifAccount}>
+            Do One-Time Initialization For GIF Program Account
+          </ConnectedContainerButton>
+        </ConnectedContainer>
+      )
+    }
+    else {
+      return (
+        <ConnectedContainer>
+          <ConnectedContainerRow>
+            <ConnectedContainerInput
+              type="text"
+              placeholder="Enter gif link!"
+              value={inputValue}
+              onChange={onInputChange}
+            />
+            <ConnectedContainerButton onClick={sendGif}>Submit</ConnectedContainerButton>
+          </ConnectedContainerRow>
+          <GifGrid>
+            {gifList.map(gif => (
+              <GifItem key={gif}>
+                <GifItemImage src={gif} alt={gif} />
+              </GifItem>
+            ))}
+          </GifGrid>
+        </ConnectedContainer>
+      )
+    }
+  };
 
   const onInputChange = (event) => {
     const { value } = event.target;
@@ -138,14 +162,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-  if (walletAddress) {
-    console.log('Fetching GIF list...');
-    // Call Solana program here.
-
-    // Set state
-    setGifList(TEST_GIFS);
-  }
-}, [walletAddress]);
+    if (walletAddress) {
+      console.log('Fetching GIF list...');
+      getGifList({ baseAccount, setGifList})
+    }
+  }, [walletAddress]);
 
   return (
     <Container overflow={"scroll"} height="100vh">
