@@ -1,6 +1,12 @@
 
 .anchor
 .DS_Store
-target
+
+!target/
+
+target/*
+!target/idl/
+
+
 **/*.rs.bk
 node_modules
