@@ -133,12 +133,25 @@ const Index = () => {
               value={inputValue}
               onChange={onInputChange}
             />
-            <ConnectedContainerButton onClick={() => sendGif({ inputValue, baseAccount, setGifList, idl, programID })}>Submit</ConnectedContainerButton>
+            <ConnectedContainerButton onClick={() => sendGif({ inputValue, baseAccount, setGifList, idl, programID }).then(() => setInputValue(''))}>Submit</ConnectedContainerButton>
           </ConnectedContainerRow>
           <GifGrid>
-            {gifList.map(gif => (
-              <GifItem key={gif}>
+            {gifList.map((gif, index) => (
+              <GifItem key={Object.values(gif).toString() + index}>
+                <ChakraLink
+                  isExternal
+                  href={gif.gifLink}
+                  style={{
+                    WebkitTapHighlightColor: 'transparent',
+                    outline: 'none !important'
+                  }}
+                  _focus={{
+                    boxShadow: 'none !important',
+                    outline: 'none !important'
+                  }}
+                  >
                 <GifItemImage src={gif.gifLink} alt={gif.gifLink} />
+                </ChakraLink>
               </GifItem>
             ))}
           </GifGrid>
@@ -201,7 +214,7 @@ const ConnectedContainerRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0.5em auto 1em 0;
+  margin: 0.5em auto 2em 0;
 `;
 
 const ConnectedContainer = styled.div`
@@ -227,7 +240,7 @@ const ConnectedContainerButton = styled.button`
   background: -webkit-linear-gradient(left, #4e44ce, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
-  margin: auto 0 auto 0.5em;
+  margin: 0 0 0 0.5em;
 `;
 
 const ConnectedContainerInput = styled.input`
@@ -246,7 +259,7 @@ const ConnectedContainerInput = styled.input`
 
 const GifItemImage = styled.img`
   width: 100%;
-  height: 300px;
+  height: 150px;
   border-radius: 10px;
   object-fit: cover;
 `;
@@ -262,8 +275,8 @@ const GifItem = styled.div`
 
 const GifGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 0.5rem;
   justify-items: center;
   margin: 0;
   padding: 0;

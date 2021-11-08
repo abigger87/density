@@ -22,9 +22,14 @@ const sendGif = async ({ inputValue, baseAccount, setGifList, idl, programID }) 
     console.log("GIF sucesfully sent to program", inputValue)
 
     await getGifList({ baseAccount, setGifList, idl, programID });
+
+    return true;
   } catch (error) {
     console.log("Error sending GIF:", error)
   }
+
+  // ** If we reach this, we failed ** //
+  return false;
 };
 
 export default sendGif;
