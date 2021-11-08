@@ -26,13 +26,19 @@ import {
 import getProvider from '../utils/GetProvider';
 
 import idl from '../../idl.json';
-import { createGifAccount, getGifList } from '../utils';
+import kp from "../assets/keypair.json";
+import { createGifAccount, getGifList, sendGif } from '../utils';
 
 // SystemProgram is a reference to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
 
+// ** Generate keypair at build-time **
 // Create a keypair for the account that will hold the GIF data.
-let baseAccount = Keypair.generate();
+// let baseAccount = Keypair.generate();
+
+const arr = Object.values(kp._keypair.secretKey)
+const secret = new Uint8Array(arr)
+const baseAccount = web3.Keypair.fromSecretKey(secret)
 
 // Get our program's id form the IDL file.
 const programID = new PublicKey(idl.metadata.address);
@@ -127,12 +133,12 @@ const Index = () => {
               value={inputValue}
               onChange={onInputChange}
             />
-            <ConnectedContainerButton onClick={sendGif}>Submit</ConnectedContainerButton>
+            <ConnectedContainerButton onClick={() => sendGif({ inputValue, baseAccount, setGifList, idl, programID })}>Submit</ConnectedContainerButton>
           </ConnectedContainerRow>
           <GifGrid>
             {gifList.map(gif => (
               <GifItem key={gif}>
-                <GifItemImage src={gif} alt={gif} />
+                <GifItemImage src={gif.gifLink} alt={gif.gifLink} />
               </GifItem>
             ))}
           </GifGrid>
@@ -146,13 +152,13 @@ const Index = () => {
     setInputValue(value);
   };
 
-  const sendGif = async () => {
-    if (inputValue.length > 0) {
-      console.log('Gif link:', inputValue);
-    } else {
-      console.log('Empty input. Try again.');
-    }
-  };
+  // const sendGif = async () => {
+  //   if (inputValue.length > 0) {
+  //     console.log('Gif link:', inputValue);
+  //   } else {
+  //     console.log('Empty input. Try again.');
+  //   }
+  // };
 
   // UseEffects
   useEffect(() => {
@@ -164,7 +170,8 @@ const Index = () => {
   useEffect(() => {
     if (walletAddress) {
       console.log('Fetching GIF list...');
-      getGifList({ baseAccount, setGifList})
+      getGifList({ baseAccount, setGifList, idl, programID });
+      console.log("Fetched gif list:", gifList);
     }
   }, [walletAddress]);
 
