@@ -23,10 +23,10 @@ import {
   Footer,
   TwitterLogo
 } from '../components';
-import getProvider from '../contexts/GetProvider';
+import getProvider from '../utils/GetProvider';
 
 import idl from '../../idl.json';
-import { createGifAccount, getGifList } from '../contexts';
+import { createGifAccount, getGifList } from '../utils';
 
 // SystemProgram is a reference to the Solana runtime!
 const { SystemProgram, Keypair } = web3;
@@ -111,7 +111,7 @@ const Index = () => {
     if (gifList === null) {
       return (
         <ConnectedContainer>
-          <ConnectedContainerButton onClick={createGifAccount}>
+          <ConnectedContainerButton onClick={() => createGifAccount({ baseAccount, setGifList, idl, programID })}>
             Do One-Time Initialization For GIF Program Account
           </ConnectedContainerButton>
         </ConnectedContainer>

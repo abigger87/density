@@ -1,6 +1,10 @@
+import {
+  Program
+} from '@project-serum/anchor';
+
 import { getProvider } from ".";
 
-const getGifList = async ({ baseAccount, setGifList }) => {
+const getGifList = async ({baseAccount, setGifList, idl, programID}) => {
   try {
     const provider = getProvider();
     // @ts-ignore

@@ -22,7 +22,7 @@ const createGifAccount = async ({baseAccount, setGifList, idl, programID}) => {
       signers: [baseAccount]
     });
     console.log("Created a new BaseAccount w/ address:", baseAccount.publicKey.toString())
-    await getGifList({baseAccount, setGifList});
+    await getGifList({baseAccount, setGifList, idl, programID});
 
   } catch(error) {
     console.log("Error creating BaseAccount account:", error)

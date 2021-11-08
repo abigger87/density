@@ -43,6 +43,7 @@
     "dotenv": "^10.0.0",
     "ethers": "^5.4.7",
     "framer-motion": "^4.0.3",
+    "fs": "^0.0.1-security",
     "logrocket": "^2.1.1",
     "material-react-toastify": "^1.0.1",
     "next": "latest",
