@@ -18,7 +18,7 @@ const CTA = () => (
 
     <ChakraLink
       isExternal
-      href="https://github.com/abigger87/solana-buildspace"
+      href="https://github.com/abigger87/density"
       mx={2}
     >
       <Button width="100%" variant="outline" colorScheme="green">

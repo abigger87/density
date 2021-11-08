@@ -1,6 +1,6 @@
-<h1 align="center">🌈 Solana Buildspace 🦄</h1>
+<h1 align="center">🌈 Density 🦄</h1>
 
-<p align="center">An NFT turn-based multiplayer wargame expanding the metaverse to Redwall!</p>
+<p align="center">A Gif Weighting System!</p>
 <p align="center">Also a <a href="https://buildspace.so">Buildspace</a> Solana Alkes Cohort Project.</p>
 
 <p align="center">🚨​ These contracts are not deployed on Mainnet 🚨​</p>
@@ -22,7 +22,7 @@ If you use VSCode to build your app, we included a list of suggested extensions 
 
 Shoot me a message on twitter [@andreasbigger](https://twitter.com/andreasbigger) or feel free to open up an issue on this repo with your question!
 
-For questions about the Buildspace course, visit the [buildspace Dashboard](https://app.buildspace.so/courses/CO5cc2751b-e878-41c4-99fa-a614dc910ee9) and link your Discord account so you can get access to helpful channels teaching assistants, and an instructor!
+For questions about the Buildspace course, visit the [buildspace Dashboard](https://app.buildspace.so) and link your Discord account so you can get access to helpful channels teaching assistants, and an instructor!
 
 ### Credits
 

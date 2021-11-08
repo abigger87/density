@@ -1,20 +1,20 @@
 {
-  "name": "buildspace-solana",
+  "name": "density",
   "version": "1.0.0",
-  "description": "Buildspace NFT Game Alkes Cohort - Create your own mini turn-based NFT browser game",
+  "description": "Buildspace Solana Gif App",
   "main": "index.js",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abigger87/buildspace-solana.git"
+    "url": "git+https://github.com/abigger87/density.git"
   },
   "keywords": [],
   "author": "Andreas Bigger <andreas@nascent.xyz>",
   "license": "The Unlicense",
   "bugs": {
-    "url": "https://github.com/abigger87/buildspace-solana/issues"
+    "url": "https://github.com/abigger87/density/issues"
   },
-  "homepage": "https://github.com/abigger87/buildspace-solana#readme",
+  "homepage": "https://github.com/abigger87/density#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

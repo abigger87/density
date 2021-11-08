@@ -22,7 +22,7 @@ const Hero = ({ title }: { title: string }) => (
 )
 
 Hero.defaultProps = {
-  title: 'Solana Buildspace',
+  title: 'Density',
 }
 
 export default Hero
